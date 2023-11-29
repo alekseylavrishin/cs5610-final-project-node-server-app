@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "name": "cs5610-final-project-node-server-app",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web Server for the CS5610 final project application, \"cs5610-final-project-react-web-app\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alekseylavrishin/cs5610-final-project-node-server-app.git"
+  },
+  "keywords": [
+    "NODE",
+    "REST",
+    "Server",
+    "HTTP"
+  ],
+  "author": "Aleksey Lavrishin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alekseylavrishin/cs5610-final-project-node-server-app/issues"
+  },
+  "homepage": "https://github.com/alekseylavrishin/cs5610-final-project-node-server-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.2"
+  }
+}
