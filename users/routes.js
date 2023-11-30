@@ -13,7 +13,7 @@ function UserRoutes(app) {
     };
 
     const deleteUser = async (req, res) => {
-        const id = req.params.userId;
+        const id = req.params.id;
         const status = await dao.deleteUser(id);
         res.json(status);
     };
@@ -33,20 +33,9 @@ function UserRoutes(app) {
         const id = req.params.id;
         const newUser = req.body;
         const status = await dao.updateUser(id, newUser);
+        currentUser = await dao.findUserById(id);
         res.json(status);
     };
-
-    const signup = async (req, res) => { };
-
-    const signin = async (req, res) => {
-        const { username, password } = req.body;
-        currentUser = await dao.findUserByCredentials(username, password);
-        res.json(currentUser);
-    };
-
-    const signout = (req, res) => { };
-
-    const account = async (req, res) => { };
 
     const findUserByUsername = async (req, res) => {
         const username = req.params.username;
@@ -66,11 +55,45 @@ function UserRoutes(app) {
         res.json(users);
     }
 
+    const signup = async (req, res) => { };
 
+    const signin = async (req, res) => {
+        const { username, password } = req.body;
+        const user = await dao.findUserByCredentials(username, password);
+        if(user){
+            currentUser = user;
+            res.json(user);
+        } else {
+            //res.sendStatus(403).json({error: "Invalid Credentials"});
+            res.sendStatus(403);
+        }
+    };
+
+    const signout = (req, res) => {
+        currentUser = null;
+        res.sendStatus(200);
+    };
+
+    const account = async (req, res) => {
+        if (!currentUser){
+            res.sendStatus(403);
+            return;
+        }
+        res.json(currentUser);
+    };
+
+    const updateFirstName = async (req, res) => {
+        const id = req.params.id;
+        const newFirstName = req.params.newFirstName;
+        const status = await dao.updateUser(id, { firstName: newFirstName });
+        res.json(status);
+    };
+
+    app.post("/api/users/signin", signin)
     app.post("/api/users", createUser);
     app.get("/api/users", findAllUsers);
     app.get("/api/users/:id", findUserById);
-    app.delete("/api/users/delete/:userId", deleteUser);
+    app.delete("/api/users/:id", deleteUser);
     app.post("/api/users/signup", signup);
     app.post("/api/users/signin", signin);
     app.post("/api/users/signout", signout);
@@ -79,5 +102,6 @@ function UserRoutes(app) {
     app.get("/api/users/credentials/:username/:password", findUserByCredentials);
     app.get("/api/users/role/:role", findUsersByRole);
     app.put("/api/users/:id", updateUser);
+    app.get("/api/users/updateFirstName/:id/:newFirstName", updateFirstName);
 }
 export default UserRoutes;
