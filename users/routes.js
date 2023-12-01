@@ -1,7 +1,8 @@
 import * as dao from "./dao.js";
 import {findUserByCredentials, findUserByUsername, findUsersByRole} from "./dao.js";
 
-let currentUser = null;
+//let currentUser = null;
+
 
 function UserRoutes(app) {
     const createUser = async (req, res) => {
@@ -33,7 +34,8 @@ function UserRoutes(app) {
         const id = req.params.id;
         const newUser = req.body;
         const status = await dao.updateUser(id, newUser);
-        currentUser = await dao.findUserById(id);
+        const currentUser = await dao.findUserById(id);
+        req.session["currentUser"] = currentUser;
         res.json(status);
     };
 
@@ -61,7 +63,8 @@ function UserRoutes(app) {
         const { username, password } = req.body;
         const user = await dao.findUserByCredentials(username, password);
         if(user){
-            currentUser = user;
+            const currentUser = user;
+            req.session["currentUser"] = currentUser;
             res.json(user);
         } else {
             //res.sendStatus(403).json({error: "Invalid Credentials"});
@@ -70,11 +73,13 @@ function UserRoutes(app) {
     };
 
     const signout = (req, res) => {
-        currentUser = null;
+        //currentUser = null;
+        req.session.destroy();
         res.sendStatus(200);
     };
 
     const account = async (req, res) => {
+        const currentUser = req.session["currentUser"];
         if (!currentUser){
             res.sendStatus(403);
             return;
