@@ -80,10 +80,10 @@ function UserRoutes(app) {
 
     const account = async (req, res) => {
         const currentUser = req.session["currentUser"];
-        if (!currentUser){
+        /*if (!currentUser){
             res.sendStatus(403);
             return;
-        }
+        }*/
         res.json(currentUser);
     };
 

@@ -4,8 +4,8 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
 import LikesRoutes from "./likes/routes.js";
-import test from "./test.js";
 import session from "express-session";
+import FollowsRoutes from "./follows/routes.js";
 
 mongoose.connect("mongodb://127.0.0.1:27017/cs-5610-final-project");
 const app = express();
@@ -23,6 +23,6 @@ app.use(session(sessionOptions));
 app.use(express.json());
 UserRoutes(app);
 LikesRoutes(app);
-test(app)
+FollowsRoutes(app);
 
 app.listen(process.env.PORT || 4000);
