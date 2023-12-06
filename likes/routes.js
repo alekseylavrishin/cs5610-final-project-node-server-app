@@ -6,12 +6,17 @@ function LikesRoutes(app) {
     const createUserLikesRecipe = async (req, res) => {
         const userId = req.params.userId;
         const recipeId = req.params.recipeId;
-        const recipeName = recipeId.
-        //const likes = await dao.createUserLikesRecipe(userId, recipeId);
+        const recipeName = recipeId;
+        const likes = await dao.createUserLikesRecipe(userId, recipeId);
         res.json(likes);
     }
 
-    const deleteUserLikesRecipe = async (req, res) => {}
+    const deleteUserLikesRecipe = async (req, res) => {
+        const userId = req.params.userId;
+        const recipeId = req.params.recipeId;
+        const status = await dao.deleteUserLikesRecipe(userId, recipeId);
+        res.json(status);
+    }
 
     const findUsersThatLikeRecipe = async (req, res) => {
         const recipeId = req.params.recipeId;
