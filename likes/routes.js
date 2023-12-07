@@ -6,8 +6,8 @@ function LikesRoutes(app) {
     const createUserLikesRecipe = async (req, res) => {
         const userId = req.params.userId;
         const recipeId = req.params.recipeId;
-        const recipeName = recipeId;
-        const likes = await dao.createUserLikesRecipe(userId, recipeId);
+        const recipeName = req.body.recipeName;
+        const likes = await dao.createUserLikesRecipe(userId, recipeId, recipeName);
         res.json(likes);
     }
 
