@@ -49,15 +49,31 @@ function UserRoutes(app) {
         const {username, password} = req.params;
         const user = await dao.findUserByCredentials(username, password);
         res.json(user);
-    }
+    };
 
     const findUsersByRole = async (req, res) => {
         const role = req.params.role;
         const users = await dao.findUsersByRole(role);
         res.json(users);
-    }
+    };
 
-    const signup = async (req, res) => { };
+    const register = async (req, res) => {
+        try {
+            const user = await dao.findUserByUsername(
+                req.body.username);
+            if (user) {
+                res.status(400).json(
+                    {message: "Username already taken"});
+                return;
+            }
+            const currentUser = await dao.createUser(req.body);
+            req.session['currentUser'] = currentUser;
+            res.json(currentUser);
+        }
+        catch (error){
+            res.status(500).json(error);
+        }
+    };
 
     const signin = async (req, res) => {
         const { username, password } = req.body;
@@ -99,7 +115,7 @@ function UserRoutes(app) {
     app.get("/api/users", findAllUsers);
     app.get("/api/users/:id", findUserById);
     app.delete("/api/users/:id", deleteUser);
-    app.post("/api/users/signup", signup);
+    app.post("/api/users/register", register);
     app.post("/api/users/signin", signin);
     app.post("/api/users/signout", signout);
     app.post("/api/users/account", account);
