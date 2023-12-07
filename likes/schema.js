@@ -4,7 +4,8 @@ const schema = new mongoose.Schema(
     {
         user: {type: mongoose.Schema.Types.ObjectId, ref: "users"},
         recipeId: String,
-        recipeName: String
+        recipeName: String,
+        recipeImage: String
     },
     { collection: "likes"}
 );
