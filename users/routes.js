@@ -1,16 +1,23 @@
 import * as dao from "./dao.js";
-import {findUserByCredentials, findUserByUsername, findUsersByRole} from "./dao.js";
-
-//let currentUser = null;
 
 
 function UserRoutes(app) {
     const createUser = async (req, res) => {
-        const {username, password, email, role} = req.params;
-        const user = await dao.createUser({
-            username, password, email, role
-        });
-        res.json(user);
+        try {
+            const username = req.body.username;
+
+            const userCheck = await dao.findUserByUsername(username);
+            if (userCheck) {
+                res.status(400).json(
+                    {message: "Username already taken"});
+                return;
+            }
+            const user = await dao.createUser(req.body);
+            res.json(user);
+        }
+        catch (error){
+            res.status(500).json(error);
+        }
     };
 
     const deleteUser = async (req, res) => {
