@@ -1,4 +1,4 @@
-import schema from "./schema.js";
+import featuresSchema from "./schema.js";
 import mongoose from "mongoose";
-const model = mongoose.model("likes", schema);
+const model = mongoose.model("features", featuresSchema);
 export default model;

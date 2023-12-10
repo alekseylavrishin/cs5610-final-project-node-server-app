@@ -1,42 +1,53 @@
 import * as dao from "./dao.js";
-function LikesRoutes(app) {
+function FeaturesRoutes(app) {
 
-/*
-    const findAllLikes = async (req, res) => {}
-*/
 
-    const createUserLikesRecipe = async (req, res) => {
+    const findAllFeatures = async (req, res) => {
+        const features = await dao.findAllFeatures();
+        res.json(features);
+    }
+
+    const createInfluencerFeaturesRecipe = async (req, res) => {
         const userId = req.params.userId;
         const recipeId = req.params.recipeId;
         const recipeName = req.body.recipeName;
         const recipeImage = req.body.recipeImage;
-        const likes = await dao.createUserLikesRecipe(userId, recipeId, recipeName, recipeImage);
-        res.json(likes);
+        const feature = await dao.createInfluencerFeaturesRecipe(userId, recipeId, recipeName, recipeImage);
+        res.json(feature);
     }
 
-    const deleteUserLikesRecipe = async (req, res) => {
+    const deleteInfluencerFeaturesRecipe = async (req, res) => {
         const userId = req.params.userId;
         const recipeId = req.params.recipeId;
-        const status = await dao.deleteUserLikesRecipe(userId, recipeId);
+        const status = await dao.deleteInfluencerFeaturesRecipe(userId, recipeId);
         res.json(status);
     }
 
-    const findUsersThatLikeRecipe = async (req, res) => {
+    const checkIfRecipeFeatured = async (req, res) => {
+        const recipeId = req.params.recipeId;
+        const status = await dao.checkIfRecipeFeatured(recipeId);
+        res.json(status);
+    }
+
+   /* const findUsersThatLikeRecipe = async (req, res) => {
         const recipeId = req.params.recipeId;
         const likes = await dao.findUsersThatLikeRecipe(recipeId);
         res.json(likes);
-    }
+    }*/
 
-    const findRecipesThatUserLikes = async (req, res) => {
+    const findRecipesThatInfluencerFeatures = async (req, res) => {
         const userId = req.params.userId;
-        const likes = await dao.findRecipesThatUserLikes(userId);
-        res.json(likes);
+        const features = await dao.findRecipesThatInfluencerFeatures(userId);
+        res.json(features);
     }
 
-    app.get("/api/likes", findAllLikes);
-    app.post("/api/users/:userId/likes/:recipeId", createUserLikesRecipe);
-    app.delete("/api/users/:userId/likes/:recipeId", deleteUserLikesRecipe);
+    app.get("/api/features", findAllFeatures);
+    app.post("/api/users/:userId/features/:recipeId", createInfluencerFeaturesRecipe);
+    app.delete("/api/users/:userId/features/:recipeId", deleteInfluencerFeaturesRecipe);
+/*
     app.get("/api/likes/:recipeId/users", findUsersThatLikeRecipe);
-    app.get("/api/users/:userId/likes", findRecipesThatUserLikes);
+*/
+    app.get("/api/users/:userId/features", findRecipesThatInfluencerFeatures);
+    app.get("/api/features/:recipeId", checkIfRecipeFeatured);
 }
-export default LikesRoutes;
+export default FeaturesRoutes;

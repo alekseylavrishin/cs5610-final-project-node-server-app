@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const schema = new mongoose.Schema(
+const featuresSchema = new mongoose.Schema(
     {
         user: {type: mongoose.Schema.Types.ObjectId, ref: "users"},
         recipeId: String,
         recipeName: String,
         recipeImage: String
     },
-    { collection: "likes"}
+    { collection: "features"}
 );
-export default schema;
+export default featuresSchema;
