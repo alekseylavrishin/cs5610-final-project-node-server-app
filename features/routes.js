@@ -24,9 +24,13 @@ function FeaturesRoutes(app) {
     }
 
     const checkIfRecipeFeatured = async (req, res) => {
-        const recipeId = req.params.recipeId;
-        const status = await dao.checkIfRecipeFeatured(recipeId);
-        res.json(status);
+        try {
+            const recipeId = req.params.recipeId;
+            const status = await dao.checkIfRecipeFeatured(recipeId);
+            res.json(status);
+        } catch (error) {
+            res.json(error);
+        }
     }
 
    /* const findUsersThatLikeRecipe = async (req, res) => {

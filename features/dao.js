@@ -15,4 +15,4 @@ export const findRecipesThatInfluencerFeatures = (userId) =>
     model.find({user: userId});
 
 export const checkIfRecipeFeatured = (recipeId) =>
-    model.find({recipeId});
+    model.findOne({recipeId});
