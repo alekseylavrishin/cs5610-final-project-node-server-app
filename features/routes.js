@@ -33,24 +33,16 @@ function FeaturesRoutes(app) {
         }
     }
 
-   /* const findUsersThatLikeRecipe = async (req, res) => {
-        const recipeId = req.params.recipeId;
-        const likes = await dao.findUsersThatLikeRecipe(recipeId);
-        res.json(likes);
-    }*/
-
     const findRecipesThatInfluencerFeatures = async (req, res) => {
         const userId = req.params.userId;
         const features = await dao.findRecipesThatInfluencerFeatures(userId);
         res.json(features);
     }
 
+
     app.get("/api/features", findAllFeatures);
     app.post("/api/users/:userId/features/:recipeId", createInfluencerFeaturesRecipe);
     app.delete("/api/users/:userId/features/:recipeId", deleteInfluencerFeaturesRecipe);
-/*
-    app.get("/api/likes/:recipeId/users", findUsersThatLikeRecipe);
-*/
     app.get("/api/users/:userId/features", findRecipesThatInfluencerFeatures);
     app.get("/api/features/:recipeId", checkIfRecipeFeatured);
 }

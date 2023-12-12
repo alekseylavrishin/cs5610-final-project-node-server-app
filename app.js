@@ -7,6 +7,7 @@ import LikesRoutes from "./likes/routes.js";
 import session from "express-session";
 import FollowsRoutes from "./follows/routes.js";
 import FeaturesRoutes from "./features/routes.js";
+import NutritionRoutes from "./nutrutionalInfo/routes.js";
 
 //mongoose.connect("mongodb://127.0.0.1:27017/cs-5610-final-project");
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/cs-5610-final-project';
@@ -35,5 +36,6 @@ UserRoutes(app);
 LikesRoutes(app);
 FollowsRoutes(app);
 FeaturesRoutes(app);
+NutritionRoutes(app);
 
 app.listen(process.env.PORT || 4000);
